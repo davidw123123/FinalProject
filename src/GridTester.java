@@ -1,6 +1,11 @@
 public class GridTester {
     public static void main(String[] args) {
-        Grid g = new Grid();
-        
+        boolean gameOver = false;
+        ConnectFour g = new ConnectFour();
+
+        while (!gameOver){
+
+        }
+
     }
 }

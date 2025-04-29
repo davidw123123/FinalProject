@@ -1,6 +1,6 @@
 public class AI extends Space {
 
-    public AI(String symbol){
+    public AI(int symbol){
         super(symbol);
     }
 }

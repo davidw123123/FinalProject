@@ -1,6 +1,6 @@
 public class Player extends Space{
 
-    public Player(String symbol) {
+    public Player(int symbol) {
         super(symbol);
     }
 }

@@ -1,10 +1,10 @@
 public class Space {
-    private String symbol;
-    public Space(String symbol) {
-        this.symbol = symbol;
+    private int num;
+    public Space(int symbol) {
+        this.num = symbol;
     }
 
-    public String getSymbol() {
-        return symbol;
+    public int getNum() {
+        return num;
     }
 }
