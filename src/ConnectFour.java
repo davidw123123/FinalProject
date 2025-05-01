@@ -10,7 +10,7 @@ public class ConnectFour {
         printBoard();
     }
     public void setBoard(){
-        this.board = new Space[6][6];
+        this.board = new Space[6][7];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 board[i][j] = new Space(0);
@@ -27,16 +27,15 @@ public class ConnectFour {
     }
 
     public void place(int c, int move){
-            int x = board[0].length;
+            int x = board[0].length-1;
             for (int j = 0; j < board.length; j++) {
-                if (board[x][c].getNum() == 0){
+                if (board[x][c].getNum() == 0) {
+                    System.out.println(board[x][c].getNum() == 0);
                     board[x][c] = new Space(move);
+                    break;
                 }
+                x--;
             }
-    }
-
-    public void versusPlayer(){
-
     }
 
 }
