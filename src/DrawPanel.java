@@ -14,6 +14,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle column7;
     private int move;
     private ConnectFour connectFour;
+    private boolean clicked = false;
     public DrawPanel() {
         move = 1;
         this.addMouseListener(this);
@@ -45,12 +46,13 @@ public class DrawPanel extends JPanel implements MouseListener{
                 g.drawOval(x, y, 40, 40);
                 g.fillOval(x,y,40,40);
                 x += 50;
+
             }
+
             g.drawOval(x, y, 40, 40);
             g.fillOval(x,y,40,40);
             x = 50;
             y+=50;
-
         }
 
 
@@ -75,11 +77,12 @@ public class DrawPanel extends JPanel implements MouseListener{
         Point clicked = e.getPoint();
         if (e.getButton() ==1 ){
             if (column1.contains(clicked)){
-                System.out.println("clicked 0");
+                this.clicked = true;
                 if (move == 1){
                     move = 2;
                     connectFour.place(0,1);
                     connectFour.printBoard();
+
                 } else if (move == 2 ) {
                     move = 1;
                     connectFour.place(0, 2);

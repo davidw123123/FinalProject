@@ -26,8 +26,12 @@ public class ConnectFour {
         }
     }
 
+    public Space[][] getBoard() {
+        return board;
+    }
+
     public void place(int c, int move){
-            int x = board[0].length-1;
+            int x = board.length-1;
             for (int j = 0; j < board.length; j++) {
                 if (board[x][c].getNum() == 0) {
                     System.out.println(board[x][c].getNum() == 0);
