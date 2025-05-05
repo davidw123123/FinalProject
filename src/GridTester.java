@@ -12,7 +12,9 @@ public class GridTester {
                 int c = s.nextInt();
                 g.place(c, move);
                 g.printBoard();
-                g.verticalChecker();
+                if (g.verticalChecker() == true){
+                    System.out.println("win");
+                }
             }
 
     }

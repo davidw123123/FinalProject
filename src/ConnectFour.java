@@ -40,9 +40,23 @@ public class ConnectFour {
             }
     }
 
-    public void verticalChecker(){
+    public boolean verticalChecker(){
+        int count = 0;
+        for (int i = board.length-1; i > 0; i--) {
+            for (int j = i - 1; j > 0; j--) {
+                System.out.println((board[i][0]));
+                System.out.println(board[j][0]);
+                if ( (board[i][0].equals(board[j][0])) ){
+                    count++;
+                    System.out.println("d");
+                }
+                if (count == 4){
+                    return true;
+                }
+            }
+        }
 
-
+        return false;
     }
 
 }
