@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class ConnectFour {
     private Space[][] board;
     private Player player;
@@ -40,6 +38,24 @@ public class ConnectFour {
                 }
                 x--;
             }
+    }
+
+    public boolean verticalChecker(){
+        int count = 0;
+
+            for (int j = 0; j < board.length; j++) {
+                for (int k = j + 1; k < board.length; k++) {
+                    if ( (board[j][0].equals(board[k][0])) ){
+                        count++;
+                        System.out.println("d");
+                    }
+                    if (count == 4){
+                        return true;
+                    }
+                }
+            }
+
+        return false;
     }
 
 }

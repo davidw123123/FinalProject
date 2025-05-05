@@ -47,6 +47,11 @@ public class DrawPanel extends JPanel implements MouseListener{
                 g.fillOval(x,y,40,40);
                 x += 50;
 
+                if (connectFour.getBoard()[j][i].equals(1)){
+                    System.out.println("d");
+                    g2.setColor(Color.RED);
+                    g2.fillOval(x,y,40,40);
+                }
             }
 
             g.drawOval(x, y, 40, 40);
@@ -55,7 +60,14 @@ public class DrawPanel extends JPanel implements MouseListener{
             y+=50;
         }
 
-
+//        if (clicked){
+//            if (move == 1){
+//                g2.setColor(Color.RED);
+//                g2.fillOval(50,50,40,40);
+//            } else
+//                g2.setColor(Color.YELLOW);
+//            g2.fillOval(x,y,40,40);
+//        }
         if (move == 1){
             g.setFont(new Font("Courier New", Font.BOLD, 30));
             g.setColor(Color.RED);
