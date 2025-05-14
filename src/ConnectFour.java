@@ -32,7 +32,7 @@ public class ConnectFour {
             int x = board.length-1;
             for (int j = 0; j < board.length; j++) {
                 if (board[x][c].getNum() == 0) {
-                    System.out.println(board[x][c].getNum() == 0);
+//                    System.out.println(board[x][c].getNum() == 0);
                     board[x][c] = new Space(move);
                     break;
                 }
@@ -40,23 +40,25 @@ public class ConnectFour {
             }
     }
 
-    public boolean verticalChecker(){
-        int count = 0;
-        for (int i = board.length-1; i > 0; i--) {
-            for (int j = i - 1; j > 0; j--) {
-                System.out.println((board[i][0]));
-                System.out.println(board[j][0]);
-                if ( (board[i][0].equals(board[j][0])) ){
-                    count++;
-                    System.out.println("d");
-                }
-                if (count == 4){
-                    return true;
-                }
+    public void verticalChecker(int column){
+        for (int i = 0; i < 6; i++) {
+            try{
+                if ( (board[i][column].getNum() != 0) &&  (board[i][column].getNum() == board[i+1][column].getNum() ) && ( board[i][column].getNum() == board[i+2][column].getNum() ) && ( board[i][column].getNum() == board[i+3][column].getNum() )){
+                    System.out.println("win");
+                }            } catch (Exception e){
+                break;
             }
         }
-
-        return false;
     }
-
+    
+    public void horizontalChecker(int row){
+        for (int i = 0; i < 7; i++) {
+            try{
+                if ( (board[row][i].getNum() != 0) &&  (board[row][i].getNum() == board[row][i+1].getNum() ) && ( board[row][i].getNum() == board[row][i+2].getNum() ) && ( board[row][i].getNum() == board[row][i+3].getNum() )){
+                    System.out.println("win");
+                }            } catch (Exception e){
+                break;
+            }
+        }
+    }
 }
