@@ -18,6 +18,8 @@ public class GridTester {
                 for (int i = 0; i < g.getBoard()[0].length; i++) {
                     g.horizontalChecker(i);
                 }
+                    g.reverseDiagonalChecker();
+
             }
 
     }

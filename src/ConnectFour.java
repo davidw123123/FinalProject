@@ -32,7 +32,6 @@ public class ConnectFour {
             int x = board.length-1;
             for (int j = 0; j < board.length; j++) {
                 if (board[x][c].getNum() == 0) {
-//                    System.out.println(board[x][c].getNum() == 0);
                     board[x][c] = new Space(move);
                     break;
                 }
@@ -40,25 +39,41 @@ public class ConnectFour {
             }
     }
 
-    public void verticalChecker(int column){
+    public boolean verticalChecker(int column){
         for (int i = 0; i < 6; i++) {
             try{
                 if ( (board[i][column].getNum() != 0) &&  (board[i][column].getNum() == board[i+1][column].getNum() ) && ( board[i][column].getNum() == board[i+2][column].getNum() ) && ( board[i][column].getNum() == board[i+3][column].getNum() )){
-                    System.out.println("win");
+                    System.out.println("Win");
+                    return true;
                 }            } catch (Exception e){
                 break;
             }
         }
+        return false;
     }
     
-    public void horizontalChecker(int row){
+    public boolean horizontalChecker(int row){
         for (int i = 0; i < 7; i++) {
             try{
                 if ( (board[row][i].getNum() != 0) &&  (board[row][i].getNum() == board[row][i+1].getNum() ) && ( board[row][i].getNum() == board[row][i+2].getNum() ) && ( board[row][i].getNum() == board[row][i+3].getNum() )){
-                    System.out.println("win");
-                }            } catch (Exception e){
+                    System.out.println("Win");
+                    return true;
+                }
+            } catch (Exception e){
                 break;
             }
         }
+        return false;
+    }
+
+    public boolean reverseDiagonalChecker() {
+        for (int i = 0; i <= board.length - 4; i++) {
+            for (int j = 0; j <= board[0].length - 4; j++) {
+                if ( (board[i][j].getNum() != 0) && (board[i][j].getNum()  == board[i+1][j+1].getNum())  && ( board[i][j].getNum() == board[i+2][j+2].getNum())   && ( board[i][j].getNum() == board[i+3][j+3].getNum() ) ) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
