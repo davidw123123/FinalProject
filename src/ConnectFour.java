@@ -2,6 +2,7 @@ public class ConnectFour {
     private Space[][] board;
     private Player player;
 
+
     public ConnectFour(){
         setBoard();
         Player player1 = new Player(0);
@@ -22,6 +23,10 @@ public class ConnectFour {
             }
             System.out.println();
         }
+    }
+
+    public void setBoard(Space[][] board) {
+        this.board = board;
     }
 
     public Space[][] getBoard() {
@@ -76,4 +81,6 @@ public class ConnectFour {
         }
         return false;
     }
+
+
 }

@@ -45,13 +45,22 @@ public class DrawPanel extends JPanel implements MouseListener{
             for (int i = 0; i < 6; i++) {
                 g.drawOval(x, y, 40, 40);
                 g.fillOval(x,y,40,40);
-                x += 50;
 
-                if (connectFour.getBoard()[j][i].equals(1)){
-                    System.out.println("d");
+
+                if ( (connectFour.getBoard()[j][i].getNum() == (1)) && clicked){
+
                     g2.setColor(Color.RED);
                     g2.fillOval(x,y,40,40);
+
+                    break;
+                } else if ( (connectFour.getBoard()[j][i].getNum() == (2)) && clicked) {
+
+                    g2.setColor(Color.YELLOW);
+                    g2.fillOval(x, y, 40, 40);
+
+                    break;
                 }
+                x += 50;
             }
 
             g.drawOval(x, y, 40, 40);
@@ -79,10 +88,6 @@ public class DrawPanel extends JPanel implements MouseListener{
             g.drawString("Player 2's turn", 450,50);
         }
     }
-    public void createBoard(){
-
-    }
-
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -102,7 +107,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 }
             }
             if (column2.contains(clicked)){
-                System.out.println("clicked 1");
+                this.clicked = true;
                 if (move == 1){
                     move = 2;
                     connectFour.place(1,1);
@@ -114,7 +119,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 }
             }
             if (column3.contains(clicked)){
-                System.out.println("clicked 2");
+                this.clicked = true;
                 if (move == 1){
                     move = 2;
                     connectFour.place(2,1);
@@ -126,7 +131,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 }
             }
             if (column4.contains(clicked)){
-                System.out.println("clicked 3");
+                this.clicked = true;
                 if (move == 1){
                     move = 2;
                     connectFour.place(3,1);
@@ -138,7 +143,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 }
             }
             if (column5.contains(clicked)){
-                System.out.println("clicked 4");
+                this.clicked = true;
                 if (move == 1){
                     move = 2;
                     connectFour.place(4,1);
@@ -150,7 +155,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 }
             }
             if (column6.contains(clicked)){
-                System.out.println("clicked 5");
+                this.clicked = true;
                 if (move == 1){
                     move = 2;
                     connectFour.place(5,1);
@@ -162,7 +167,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 }
             }
             if (column7.contains(clicked)){
-                System.out.println("clicked 6");
+                this.clicked = true;
                 if (move == 1){
                     move = 2;
                     connectFour.place(6,1);

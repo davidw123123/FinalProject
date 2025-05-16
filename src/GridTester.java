@@ -12,6 +12,7 @@ public class GridTester {
                 int c = s.nextInt();
                 g.place(c, move);
                 g.printBoard();
+                g.setBoard();
                 for (int i = 0; i < g.getBoard().length; i++) {
                     g.verticalChecker(i);
                 }
