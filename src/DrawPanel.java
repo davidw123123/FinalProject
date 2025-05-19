@@ -15,6 +15,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     private int move;
     private ConnectFour connectFour;
     private boolean clicked = false;
+    private int winner = 0;
     public DrawPanel() {
         move = 1;
         this.addMouseListener(this);
@@ -80,6 +81,7 @@ public class DrawPanel extends JPanel implements MouseListener{
 
             if (column1.contains(clickedPoint)){
                 place(0);
+
             } else if (column2.contains(clickedPoint)){
                 place(1);
             } else if (column3.contains(clickedPoint)){
@@ -93,7 +95,6 @@ public class DrawPanel extends JPanel implements MouseListener{
             } else if (column7.contains(clickedPoint)) {
                 place(6);
             }
-
 
         }
     }
@@ -126,6 +127,15 @@ public class DrawPanel extends JPanel implements MouseListener{
             move = 1;
         }
         connectFour.printBoard();
+    }
+    private boolean checkWin() {
+        for (int row = 0; row < 6; row++) {
+            if (connectFour.horizontalChecker(row)) return true;
+        }
+        for (int col = 0; col < 7; col++) {
+            if (connectFour.verticalChecker(col)) return true;
+        }
+        return connectFour.reverseDiagonalChecker();
     }
 
 }

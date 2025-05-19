@@ -75,6 +75,7 @@ public class ConnectFour {
         for (int i = 0; i <= board.length - 4; i++) {
             for (int j = 0; j <= board[0].length - 4; j++) {
                 if ( (board[i][j].getNum() != 0) && (board[i][j].getNum()  == board[i+1][j+1].getNum())  && ( board[i][j].getNum() == board[i+2][j+2].getNum())   && ( board[i][j].getNum() == board[i+3][j+3].getNum() ) ) {
+                    System.out.println("Win");
                     return true;
                 }
             }
@@ -82,5 +83,19 @@ public class ConnectFour {
         return false;
     }
 
+    public boolean diagonalChecker() {
+        for (int i = 0; i <= board.length - 4; i++) {
+            for (int j = 3; j < board[0].length; j++) {
+                if (board[i][j].getNum() != 0 &&
+                        board[i][j].getNum() == board[i+1][j-1].getNum() &&
+                        board[i][j].getNum() == board[i+2][j-2].getNum() &&
+                        board[i][j].getNum() == board[i+3][j-3].getNum()) {
+                    System.out.println("Win");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }
