@@ -44,58 +44,64 @@ public class ConnectFour {
             }
     }
 
-    public boolean verticalChecker(int column){
+    public int verticalChecker(int column){
         for (int i = 0; i < 6; i++) {
             try{
                 if ( (board[i][column].getNum() != 0) &&  (board[i][column].getNum() == board[i+1][column].getNum() ) && ( board[i][column].getNum() == board[i+2][column].getNum() ) && ( board[i][column].getNum() == board[i+3][column].getNum() )){
-                    System.out.println("Win");
-                    return true;
+                    if (board[i][column].getNum() == 1){
+                        return 1;
+                    } else
+                        return 2;
+
                 }            } catch (Exception e){
                 break;
             }
         }
-        return false;
+        return 0;
     }
     
-    public boolean horizontalChecker(int row){
+    public int horizontalChecker(int row){
         for (int i = 0; i < 7; i++) {
             try{
                 if ( (board[row][i].getNum() != 0) &&  (board[row][i].getNum() == board[row][i+1].getNum() ) && ( board[row][i].getNum() == board[row][i+2].getNum() ) && ( board[row][i].getNum() == board[row][i+3].getNum() )){
-                    System.out.println("Win");
-                    return true;
+                    if (board[row][i].getNum() == 1){
+                        return 1;
+                    } else
+                        return 2;
                 }
             } catch (Exception e){
                 break;
             }
         }
-        return false;
+        return 0;
     }
 
-    public boolean reverseDiagonalChecker() {
+    public int reverseDiagonalChecker() {
         for (int i = 0; i <= board.length - 4; i++) {
             for (int j = 0; j <= board[0].length - 4; j++) {
                 if ( (board[i][j].getNum() != 0) && (board[i][j].getNum()  == board[i+1][j+1].getNum())  && ( board[i][j].getNum() == board[i+2][j+2].getNum())   && ( board[i][j].getNum() == board[i+3][j+3].getNum() ) ) {
-                    System.out.println("Win");
-                    return true;
+                    if (board[i][j].getNum() == 1){
+                        return 1;
+                    } else
+                        return 2;
                 }
             }
         }
-        return false;
+        return 0;
     }
 
-    public boolean diagonalChecker() {
+    public int diagonalChecker() {
         for (int i = 0; i <= board.length - 4; i++) {
             for (int j = 3; j < board[0].length; j++) {
-                if (board[i][j].getNum() != 0 &&
-                        board[i][j].getNum() == board[i+1][j-1].getNum() &&
-                        board[i][j].getNum() == board[i+2][j-2].getNum() &&
-                        board[i][j].getNum() == board[i+3][j-3].getNum()) {
-                    System.out.println("Win");
-                    return true;
+                if (board[i][j].getNum() != 0 && board[i][j].getNum() == board[i+1][j-1].getNum() && board[i][j].getNum() == board[i+2][j-2].getNum() && board[i][j].getNum() == board[i+3][j-3].getNum()) {
+                    if (board[i][j].getNum() == 1){
+                        return 1;
+                    } else
+                        return 2;
                 }
             }
         }
-        return false;
+        return 0;
     }
 
 }

@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class DrawPanel extends JPanel implements MouseListener{
@@ -15,6 +16,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     private int move;
     private ConnectFour connectFour;
     private boolean clicked = false;
+    private ArrayList<Rectangle> columns;
     private int winner = 0;
     public DrawPanel() {
         move = 1;
@@ -61,14 +63,24 @@ public class DrawPanel extends JPanel implements MouseListener{
         }
 
 
+
         g.setFont(new Font("Courier New", Font.BOLD, 30));
-        if (move == 1) {
-            g.setColor(Color.RED);
-            g.drawString("Player 1's turn", 450, 50);
-        } else {
-            g.setColor(Color.BLUE);
-            g.drawString("Player 2's turn", 450, 50);
+        if (checkWin() == 0){
+            if (move == 1) {
+                g.setColor(Color.RED);
+                g.drawString("Player 1's turn", 450, 50);
+            } else {
+                g.setColor(Color.BLUE);
+                g.drawString("Player 2's turn", 450, 50);
+            }
+        } else if (checkWin() == 1){
+            g.setColor(Color.BLACK);
+            g.drawString("Player 1 Wins", 450, 100);
+        } else if (checkWin() == 2){
+            g.setColor(Color.BLACK);
+            g.drawString("Player 2 Wins", 450, 100);
         }
+
     }
 
 
@@ -81,7 +93,6 @@ public class DrawPanel extends JPanel implements MouseListener{
 
             if (column1.contains(clickedPoint)){
                 place(0);
-
             } else if (column2.contains(clickedPoint)){
                 place(1);
             } else if (column3.contains(clickedPoint)){
@@ -128,14 +139,27 @@ public class DrawPanel extends JPanel implements MouseListener{
         }
         connectFour.printBoard();
     }
-    private boolean checkWin() {
+    private int checkWin() {
         for (int row = 0; row < 6; row++) {
-            if (connectFour.horizontalChecker(row)) return true;
+            if (connectFour.horizontalChecker(row) == 1){
+                return 1;
+            } else if (connectFour.horizontalChecker(row) == 2){
+                return 2;
+            }
         }
         for (int col = 0; col < 7; col++) {
-            if (connectFour.verticalChecker(col)) return true;
+            if (connectFour.verticalChecker(col) == 1){
+                return 1;
+            } else if (connectFour.verticalChecker(col) == 2){
+                return 2;
+            }
         }
-        return connectFour.reverseDiagonalChecker();
+        if (connectFour.reverseDiagonalChecker() == 1){
+            return 1;
+        } else if (connectFour.reverseDiagonalChecker() == 2){
+            return 2;
+        }
+        return connectFour.diagonalChecker();
     }
 
 }
