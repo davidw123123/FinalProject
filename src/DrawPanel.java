@@ -14,12 +14,14 @@ public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle column6;
     private Rectangle column7;
     private int move;
+    private boolean placeElse;
     private ConnectFour connectFour;
     private boolean clicked = false;
     private ArrayList<Rectangle> columns;
     private int winner = 0;
     public DrawPanel() {
         move = 1;
+        placeElse = false;
         this.addMouseListener(this);
         connectFour = new ConnectFour();
     }
@@ -69,9 +71,17 @@ public class DrawPanel extends JPanel implements MouseListener{
             if (move == 1) {
                 g.setColor(Color.RED);
                 g.drawString("Player 1's turn", 450, 50);
+                if (placeElse){
+                    g.setFont(new Font("Courier New", Font.BOLD, 30));
+                    g.drawString("Full!", 450, 100);
+                }
             } else {
                 g.setColor(Color.BLUE);
                 g.drawString("Player 2's turn", 450, 50);
+                if (placeElse){
+                    g.setFont(new Font("Courier New", Font.BOLD, 30));
+                    g.drawString("Full!", 450, 100);
+                }
             }
         } else if (checkWin() == 1){
             g.setColor(Color.BLACK);
@@ -92,18 +102,39 @@ public class DrawPanel extends JPanel implements MouseListener{
             this.clicked = true;
 
             if (column1.contains(clickedPoint)){
+                if (connectFour.getBoard()[0][0].getNum() != 0){
+                    placeElse = true;
+                } else
                 place(0);
             } else if (column2.contains(clickedPoint)){
+                if (connectFour.getBoard()[0][1].getNum() != 0){
+                    placeElse = true;
+                } else
                 place(1);
             } else if (column3.contains(clickedPoint)){
+                if (connectFour.getBoard()[0][2].getNum() != 0){
+                    placeElse = true;
+                } else
                 place(2);
             } else if (column4.contains(clickedPoint)){
+                if (connectFour.getBoard()[0][3].getNum() != 0){
+                    placeElse = true;
+                } else
                 place(3);
             } else if (column5.contains(clickedPoint)){
+                if (connectFour.getBoard()[0][4].getNum() != 0){
+                    placeElse = true;
+                } else
                 place(4);
             } else if (column6.contains(clickedPoint)){
+                if (connectFour.getBoard()[0][5].getNum() != 0){
+                    placeElse = true;
+                } else
                 place(5);
             } else if (column7.contains(clickedPoint)) {
+                if (connectFour.getBoard()[0][6].getNum() != 0){
+                    placeElse = true;
+                } else
                 place(6);
             }
 

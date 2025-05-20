@@ -2,7 +2,6 @@ public class ConnectFour {
     private Space[][] board;
     private Player player;
 
-
     public ConnectFour(){
         setBoard();
         Player player1 = new Player(0);
