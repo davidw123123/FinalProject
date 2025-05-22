@@ -103,4 +103,23 @@ public class AI {
         return copyOfBoard[copyOfBoard.length - 1][col].getNum() == 0;
     }
 
+    public static int evaluateLines(Space[][] board, int num, Player player){
+        //determines the importance of each space
+        int score = 0;
+
+        //checks for three ina  row and if it is, adds score
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[j].length; j++) {
+                try {
+                    if ( (board[i][j].getNum()== 1) && (board[i][j].getNum() == board[i][j+1].getNum())  && ( board[i][j].getNum() == board[i][j+2].getNum() )){
+                        score += 150;
+                    } else
+                        score += 100;
+                } catch (Exception e){
+                    break;
+                }
+            }
+        }
+        return score;
+    }
 }

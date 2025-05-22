@@ -29,6 +29,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        setBackground(Color.BLACK);
         Graphics2D g2 = (Graphics2D) g;
 
         column1 = new Rectangle(50, 50,40,300);
@@ -39,8 +40,8 @@ public class DrawPanel extends JPanel implements MouseListener{
         column6 = new Rectangle(300, 50,40,300);
         column7 = new Rectangle(350, 50,40,300);
 
-        g.setColor(Color.BLUE);
-        g.fillRect(30, 30, 380, 350);
+        g.setColor(new java.awt.Color(0, 31, 255));
+        g.fillRect(30, 30, 380, 330);
 
 
         int x = 50;
@@ -53,11 +54,11 @@ public class DrawPanel extends JPanel implements MouseListener{
                 } else if (num == 2 && clicked) {
                     g2.setColor(Color.YELLOW);
                 } else {
-                    g2.setColor(Color.WHITE);
+                    g2.setColor(Color.BLACK);
                 }
 
-                g2.fillOval(x, y, 40, 40);
-                g2.drawOval(x, y, 40, 40);
+                g2.fillOval(x, y, 45, 45);
+                g2.drawOval(x, y, 45, 45);
                 x += 50;
             }
             x = 50;
@@ -84,10 +85,10 @@ public class DrawPanel extends JPanel implements MouseListener{
                 }
             }
         } else if (checkWin() == 1){
-            g.setColor(Color.BLACK);
+            g.setColor(Color.WHITE);
             g.drawString("Player 1 Wins", 450, 100);
         } else if (checkWin() == 2){
-            g.setColor(Color.BLACK);
+            g.setColor(Color.WHITE);
             g.drawString("Player 2 Wins", 450, 100);
         }
 
