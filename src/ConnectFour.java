@@ -1,13 +1,22 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class ConnectFour {
+    private boolean show;
+    private BufferedImage image;
+    private String imageFileName;
     private Space[][] board;
     private Player player;
 
-    public ConnectFour(){
+    public ConnectFour() {
         setBoard();
         Player player1 = new Player(0);
         printBoard();
     }
-    public void setBoard(){
+
+    public void setBoard() {
         this.board = new Space[6][7];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -15,6 +24,7 @@ public class ConnectFour {
             }
         }
     }
+
     public void printBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -32,43 +42,44 @@ public class ConnectFour {
         return board;
     }
 
-    public void place(int c, int move){
-            int x = board.length-1;
-            for (int j = 0; j < board.length; j++) {
-                if (board[x][c].getNum() == 0) {
-                    board[x][c] = new Space(move);
-                    break;
-                }
-                x--;
+    public void place(int c, int move) {
+        int x = board.length - 1;
+        for (int j = 0; j < board.length; j++) {
+            if (board[x][c].getNum() == 0) {
+                board[x][c] = new Space(move);
+                break;
             }
+            x--;
+        }
     }
 
-    public int verticalChecker(int column){
+    public int verticalChecker(int column) {
         for (int i = 0; i < 6; i++) {
-            try{
-                if ( (board[i][column].getNum() != 0) &&  (board[i][column].getNum() == board[i+1][column].getNum() ) && ( board[i][column].getNum() == board[i+2][column].getNum() ) && ( board[i][column].getNum() == board[i+3][column].getNum() )){
-                    if (board[i][column].getNum() == 1){
+            try {
+                if ((board[i][column].getNum() != 0) && (board[i][column].getNum() == board[i + 1][column].getNum()) && (board[i][column].getNum() == board[i + 2][column].getNum()) && (board[i][column].getNum() == board[i + 3][column].getNum())) {
+                    if (board[i][column].getNum() == 1) {
                         return 1;
                     } else
                         return 2;
 
-                }            } catch (Exception e){
+                }
+            } catch (Exception e) {
                 break;
             }
         }
         return 0;
     }
-    
-    public int horizontalChecker(int row){
+
+    public int horizontalChecker(int row) {
         for (int i = 0; i < 7; i++) {
-            try{
-                if ( (board[row][i].getNum() != 0) &&  (board[row][i].getNum() == board[row][i+1].getNum() ) && ( board[row][i].getNum() == board[row][i+2].getNum() ) && ( board[row][i].getNum() == board[row][i+3].getNum() )){
-                    if (board[row][i].getNum() == 1){
+            try {
+                if ((board[row][i].getNum() != 0) && (board[row][i].getNum() == board[row][i + 1].getNum()) && (board[row][i].getNum() == board[row][i + 2].getNum()) && (board[row][i].getNum() == board[row][i + 3].getNum())) {
+                    if (board[row][i].getNum() == 1) {
                         return 1;
                     } else
                         return 2;
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 break;
             }
         }
@@ -78,8 +89,8 @@ public class ConnectFour {
     public int reverseDiagonalChecker() {
         for (int i = 0; i <= board.length - 4; i++) {
             for (int j = 0; j <= board[0].length - 4; j++) {
-                if ( (board[i][j].getNum() != 0) && (board[i][j].getNum()  == board[i+1][j+1].getNum())  && ( board[i][j].getNum() == board[i+2][j+2].getNum())   && ( board[i][j].getNum() == board[i+3][j+3].getNum() ) ) {
-                    if (board[i][j].getNum() == 1){
+                if ((board[i][j].getNum() != 0) && (board[i][j].getNum() == board[i + 1][j + 1].getNum()) && (board[i][j].getNum() == board[i + 2][j + 2].getNum()) && (board[i][j].getNum() == board[i + 3][j + 3].getNum())) {
+                    if (board[i][j].getNum() == 1) {
                         return 1;
                     } else
                         return 2;
@@ -92,8 +103,8 @@ public class ConnectFour {
     public int diagonalChecker() {
         for (int i = 0; i <= board.length - 4; i++) {
             for (int j = 3; j < board[0].length; j++) {
-                if (board[i][j].getNum() != 0 && board[i][j].getNum() == board[i+1][j-1].getNum() && board[i][j].getNum() == board[i+2][j-2].getNum() && board[i][j].getNum() == board[i+3][j-3].getNum()) {
-                    if (board[i][j].getNum() == 1){
+                if (board[i][j].getNum() != 0 && board[i][j].getNum() == board[i + 1][j - 1].getNum() && board[i][j].getNum() == board[i + 2][j - 2].getNum() && board[i][j].getNum() == board[i + 3][j - 3].getNum()) {
+                    if (board[i][j].getNum() == 1) {
                         return 1;
                     } else
                         return 2;
@@ -103,4 +114,20 @@ public class ConnectFour {
         return 0;
     }
 
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public BufferedImage readImage() {
+        try {
+            BufferedImage image = getImage();
+            if (show) {
+                image = ImageIO.read(new File(imageFileName));
+            }
+            return image;
+        } catch (IOException e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 }
