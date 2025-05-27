@@ -104,10 +104,10 @@ public class AI {
     }
 
     public static int evaluateLines(Space[][] board, int num, Player player){
-        //determines the importance of each space
+        //determines the importance of each line
         int score = 0;
 
-        //checks for three ina  row and if it is, adds score
+        //checks for three in a row and if it is, adds score
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[j].length; j++) {
                 try {
@@ -120,6 +120,56 @@ public class AI {
                 }
             }
         }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = board[0].length-1; j > 3; j--) {
+                try {
+                    if ( (board[i][j].getNum()== 1) && (board[i][j].getNum() == board[i][j-1].getNum())  && ( board[i][j].getNum() == board[i][j-2].getNum() )){
+                        score += 150;
+                    } else
+                        score += 100;
+                } catch (Exception e){
+                    break;
+                }
+            }
+        }
+
+        // two in a row
+        for (int i = board.length - 1; i >= 0; i--) {
+            for (int j = 0; j < 2; j++) {
+                if ((board[i][j].getNum()== 1) && (board[i][j + 1].getNum()==1)){
+                    score += 5;
+                }
+            }
+        }
+
+        for (int i = board.length - 1; i >= 0; i--) {
+            for (int j = 0; j < 2; j++) {
+                if ((board[i][j].getNum()== 1) && (board[i][j + 1].getNum()==1)){
+                    score += 5;
+                }
+            }
+        }
+
+        //vertical 2 in a row
+        for (int i = 0; i < board[0].length - 1; i++) {
+            for (int j = board.length - 1; j > 4; j--) {
+                if ((board[j][i].getNum()==1) && (board[j - 1][i].getNum()==1)) {
+                    score += 5;
+                }
+
+            }
+        }
+        for (int i = board[0].length - 1; i > 0; i--) {
+            for (int j = board.length - 1; j > 3; j--) {
+                if ((board[j][i].getNum()==1) && board[j - 1][i].getNum()==1) {
+                    score += 5;
+                }
+            }
+        }
+
+
+
+
         return score;
     }
 }

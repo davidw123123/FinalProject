@@ -69,17 +69,9 @@ public class DrawPanel extends JPanel implements MouseListener{
             if (move == 1) {
                 g.setColor(Color.RED);
                 g.drawString("Player 1's turn", 80, 30);
-                if (placeElse){
-                    g.setFont(new Font("Courier New", Font.BOLD, 30));
-                    g.drawString("Full!", 450, 100);
-                }
             } else {
                 g.setColor(Color.YELLOW);
                 g.drawString("Player 2's turn", 80, 30);
-                if (placeElse){
-                    g.setFont(new Font("Courier New", Font.BOLD, 30));
-                    g.drawString("Full!", 450, 100);
-                }
             }
         } if (checkWin() != 0){
             g.setColor(Color.GRAY);
