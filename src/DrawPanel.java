@@ -17,10 +17,10 @@ public class DrawPanel extends JPanel implements MouseListener{
     private ConnectFour connectFour;
     private boolean clicked = false;
     public DrawPanel() {
+        connectFour = new ConnectFour();
         move = 1;
         placeElse = false;
         this.addMouseListener(this);
-        connectFour = new ConnectFour();
     }
 
     @Override

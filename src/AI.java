@@ -69,7 +69,8 @@ public class AI {
         }
     }
 
-    // not finished
+    // evaluates the center of the board which is very important to the control of the game. Counts the amount of spaces ai has vs human.
+    // negative number means unfavorable for ai while positive means favorable
     public static int evaluateBoard(Space[][] gameBoard, String aiSymbol, String humanSymbol){
         int aiCount = 0;
         int humanCount = 0;
@@ -82,7 +83,7 @@ public class AI {
                 }
             }
         }
-        return 0;
+        return (int) ((aiCount - humanCount) * 2.5);
     }
 
     public int[] getValidLocations(){
@@ -143,9 +144,36 @@ public class AI {
         }
 
         for (int i = board.length - 1; i >= 0; i--) {
-            for (int j = 0; j < 2; j++) {
+            for (int j = board[0].length-1; j > 4; j--) {
                 if ((board[i][j].getNum()== 1) && (board[i][j + 1].getNum()==1)){
                     score += 5;
+                }
+            }
+        }
+
+        //vertical 3 in a row checker
+        for (int i = 0; i < board[0].length-1; i++) {
+            for (int j = board[0].length - 1; j > 3 ; j--) {
+                try {
+                    if ( (board[i][j].getNum()== 1) && (board[i][j].getNum() == board[i+1][j].getNum())  && ( board[i][j].getNum() == board[i+2][j].getNum() )){
+                        score += 150;
+                    } else
+                        score += 100;
+                } catch (Exception e){
+                    break;
+                }
+            }
+        }
+
+        for (int i = board[0].length - 1; i > 0; i--) {
+            for (int j = board[0].length-1; j > 2; j--) {
+                try {
+                    if ( (board[i][j].getNum()== 1) && (board[i][j].getNum() == board[i-1][j].getNum())  && ( board[i][j].getNum() == board[i-2][j].getNum() )){
+                        score += 150;
+                    } else
+                        score += 100;
+                } catch (Exception e){
+                    break;
                 }
             }
         }
@@ -167,7 +195,22 @@ public class AI {
             }
         }
 
+        //diagonal checker for 3 in a row
+        for (int i = 2; i < board.length; i++) {
+            for (int j = 0; j < board[0].length-2; j++) {
+                if ((board[j][i].getNum()==1) && board[i-1][j+1].getNum() == 1 && (board[i-2][j+2].getNum() == 1)){
+                    score += 150;
+                }
+            }
+        }
 
+        for (int i = 0; i < board.length-2; i++) {
+            for (int j = 0; j < board[0].length-2; j++) {
+                if ((board[j][i].getNum()==1) && board[i+1][j+1].getNum() == 1 && (board[i+2][j+2].getNum() == 1)){
+                    score += 150;
+                }
+            }
+        }
 
 
         return score;
