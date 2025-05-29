@@ -14,7 +14,37 @@ public class AI {
         if (isFull() || depth == 0){
             return 0;
         }
+        int bestScore = -99999;
+        int bestMove = 0;
+        if (maximizing){
+            for (int i = 0; i < board[0].length; i++) {
+                if (!isValid(i)){
+                    continue;
+                }
+                Space[][] copy = copyOfBoard;
+                //apply move method
+                int score = miniMax(copy, depth-1, end, false);
+                if (score > bestScore){
+                    bestScore = score;
+                    bestMove = i;
+                }
+            }
 
+        }
+        if (!maximizing){
+            for (int i = 0; i < board[0].length; i++) {
+                if (!isValid(i)){
+                    continue;
+                }
+                Space[][] copy = copyOfBoard;
+                //apply move
+                int score = miniMax(copy, depth-1, end, true);
+                if (score < bestScore){
+                    bestScore = score;
+                    bestMove = i;
+                }
+            }
+        }
         // Check if the method is maximizing
         // if it is, iterate through the columns of the board and if it is not an empty space, skip it.
         // create a copy of the board and apply possible moves in those test boards. And then set the score of those to the miniMax method with a lower depth
@@ -23,9 +53,11 @@ public class AI {
         // iterate through the columns of the board and if it is not an empty space, skip it.
         // create a copy of the board and apply possible moves in those test boards. And then set the score of those to the miniMax method with a lower depth
         // check if the score gotten from the recursion is lower than the best score, if it is, change best score to score
-        // at the end, if depth is reached, return bestMove else if its not, return best score.
-
-        return 1;
+        // at the end, if depth is reached, return bestMove else if it's not, return best score.
+        if (depth == end){
+            return bestMove;
+        } else
+        return bestScore;
     }
 
     public static boolean isFull(){
@@ -71,7 +103,7 @@ public class AI {
 
     // evaluates the center of the board which is very important to the control of the game. Counts the amount of spaces ai has vs human.
     // negative number means unfavorable for ai while positive means favorable
-    public static int evaluateBoard(Space[][] gameBoard, String aiSymbol, String humanSymbol){
+    public static int evaluateCenter(Space[][] gameBoard, String aiSymbol, String humanSymbol){
         int aiCount = 0;
         int humanCount = 0;
         for (int c = 2; c <= 4 ; c++) {
@@ -134,7 +166,7 @@ public class AI {
             }
         }
 
-        // two in a row
+        // horizontal two in a row
         for (int i = board.length - 1; i >= 0; i--) {
             for (int j = 0; j < 2; j++) {
                 if ((board[i][j].getNum()== 1) && (board[i][j + 1].getNum()==1)){
@@ -207,11 +239,27 @@ public class AI {
         for (int i = 0; i < board.length-2; i++) {
             for (int j = 0; j < board[0].length-2; j++) {
                 if ((board[j][i].getNum()==1) && board[i+1][j+1].getNum() == 1 && (board[i+2][j+2].getNum() == 1)){
-                    score += 150;
+                    score += 5;
                 }
             }
         }
 
+        // diagonal two in a row
+        for (int i = 2; i < board.length; i++) {
+            for (int j = 0; j < board[0].length-2; j++) {
+                if ((board[j][i].getNum()==1) && board[i-1][j+1].getNum() == 1){
+                    score += 5;
+                }
+            }
+        }
+
+        for (int i = 0; i < board.length-2; i++) {
+            for (int j = 0; j < board[0].length-2; j++) {
+                if ((board[j][i].getNum()==1) && board[i+1][j+1].getNum() == 1){
+                    score += 150;
+                }
+            }
+        }
 
         return score;
     }
