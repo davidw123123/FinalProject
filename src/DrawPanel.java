@@ -14,6 +14,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle column7;
     private int move;
     private boolean placeElse;
+    private Rectangle restartButton;
     private ConnectFour connectFour;
     private boolean clicked = false;
     public DrawPanel() {
@@ -37,6 +38,11 @@ public class DrawPanel extends JPanel implements MouseListener{
         column6 = new Rectangle(300, 50,40,300);
         column7 = new Rectangle(350, 50,40,300);
 
+        restartButton = new Rectangle(415, 10, 20,20);
+//        g.drawImage(connectFour.getImage(), 415,10, null);
+        g.setColor(Color.GREEN);
+
+        g.fillRect(415, 10, 20,20);
         g.setColor(new java.awt.Color(0, 31, 255));
         g.fillRect(30, 30, 380, 330);
 
@@ -61,8 +67,6 @@ public class DrawPanel extends JPanel implements MouseListener{
             x = 50;
             y += 50;
         }
-
-
 
         g.setFont(new Font("Courier New", Font.BOLD, 30));
         if (checkWin() == 0){
@@ -138,8 +142,11 @@ public class DrawPanel extends JPanel implements MouseListener{
                 } else
                     place(6);
             }
-
+            if (restartButton.contains(clickedPoint)){
+                restart();
+            }
         }
+
     }
 
     @Override
@@ -195,6 +202,10 @@ public class DrawPanel extends JPanel implements MouseListener{
     }
 
     private void restart(){
-        new DrawPanel();
+        connectFour = new ConnectFour();
+        move = 1;
+        placeElse = false;
+        repaint();
     }
+
 }

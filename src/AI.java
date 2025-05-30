@@ -22,7 +22,7 @@ public class AI {
                     continue;
                 }
                 Space[][] copy = copyOfBoard;
-                //apply move method
+                applyMove(copy, i, 2);
                 int score = miniMax(copy, depth-1, end, false);
                 if (score > bestScore){
                     bestScore = score;
@@ -60,6 +60,14 @@ public class AI {
         return bestScore;
     }
 
+    public static void applyMove(Space[][] board, int col, int player){
+        for (int i = 0; i < board[0].length; i++) {
+            if (board[i][col].getNum() == 1){
+                board[i][col] = new Space(2);
+                break;
+            }
+        }
+    }
     public static boolean isFull(){
         int count = 0;
         for (int i = 0; i < copyOfBoard.length; i++) {

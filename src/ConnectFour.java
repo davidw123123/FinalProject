@@ -12,7 +12,8 @@ public class ConnectFour {
 
     public ConnectFour() {
         setBoard();
-        Player player1 = new Player(0);
+        this.imageFileName = "restart" + ".png";
+        this.image = readImage();
         printBoard();
     }
 
@@ -32,10 +33,6 @@ public class ConnectFour {
             }
             System.out.println();
         }
-    }
-
-    public void setBoard(Space[][] board) {
-        this.board = board;
     }
 
     public Space[][] getBoard() {
@@ -115,7 +112,17 @@ public class ConnectFour {
     }
 
     public BufferedImage getImage() {
-        return image;
+        try {
+            BufferedImage image;
+            // if this is true, show the front
+            // otherwise show the back
+                image = ImageIO.read(new File(imageFileName));
+            return image;
+        }
+        catch (IOException e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     public BufferedImage readImage() {
