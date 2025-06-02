@@ -13,14 +13,12 @@ public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle column6;
     private Rectangle column7;
     private int move;
-    private boolean placeElse;
     private Rectangle restartButton;
     private ConnectFour connectFour;
     private boolean clicked = false;
     public DrawPanel() {
         connectFour = new ConnectFour();
         move = 1;
-        placeElse = false;
         this.addMouseListener(this);
     }
 
@@ -39,7 +37,6 @@ public class DrawPanel extends JPanel implements MouseListener{
         column7 = new Rectangle(350, 50,40,300);
 
         restartButton = new Rectangle(415, 10, 20,20);
-//        g.drawImage(connectFour.getImage(), 415,10, null);
         g.setColor(Color.GREEN);
 
         g.fillRect(415, 10, 20,20);
@@ -84,7 +81,6 @@ public class DrawPanel extends JPanel implements MouseListener{
             g.setColor(Color.BLACK);
             g.setFont(new Font("Courier New", Font.BOLD, 20));
             g.drawString("Game Over", 170,25);
-            g.drawImage(connectFour.readImage(), 100,10,null);
             if (checkWin() == 1){
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Courier New", Font.BOLD, 17));
@@ -107,40 +103,33 @@ public class DrawPanel extends JPanel implements MouseListener{
             this.clicked = true;
 
             if (column1.contains(clickedPoint)){
-                if (connectFour.getBoard()[0][0].getNum() != 0){
-                    placeElse = true;
-                } else
+                if (connectFour.getBoard()[0][0].getNum() == 0) {
                     place(0);
+                }
             } else if (column2.contains(clickedPoint)){
-                if (connectFour.getBoard()[0][1].getNum() != 0){
-                    placeElse = true;
-                } else
+                if (connectFour.getBoard()[0][1].getNum() == 0) {
                     place(1);
+                }
             } else if (column3.contains(clickedPoint)){
-                if (connectFour.getBoard()[0][2].getNum() != 0){
-                    placeElse = true;
-                } else
+                if (connectFour.getBoard()[0][2].getNum() == 0) {
                     place(2);
+                }
             } else if (column4.contains(clickedPoint)){
-                if (connectFour.getBoard()[0][3].getNum() != 0){
-                    placeElse = true;
-                } else
+                if (connectFour.getBoard()[0][3].getNum() == 0) {
                     place(3);
+                }
             } else if (column5.contains(clickedPoint)){
-                if (connectFour.getBoard()[0][4].getNum() != 0){
-                    placeElse = true;
-                } else
+                if (connectFour.getBoard()[0][4].getNum() == 0) {
                     place(4);
+                }
             } else if (column6.contains(clickedPoint)){
-                if (connectFour.getBoard()[0][5].getNum() != 0){
-                    placeElse = true;
-                } else
+                if (connectFour.getBoard()[0][5].getNum() == 0) {
                     place(5);
+                }
             } else if (column7.contains(clickedPoint)) {
-                if (connectFour.getBoard()[0][6].getNum() != 0){
-                    placeElse = true;
-                } else
+                if (connectFour.getBoard()[0][6].getNum() == 0) {
                     place(6);
+                }
             }
             if (restartButton.contains(clickedPoint)){
                 restart();
@@ -179,23 +168,27 @@ public class DrawPanel extends JPanel implements MouseListener{
         connectFour.printBoard();
     }
     private int checkWin() {
-        for (int row = 0; row < 6; row++) {
-            if (connectFour.horizontalChecker(row) == 1){
-                return 1;
-            } else if (connectFour.horizontalChecker(row) == 2){
-                return 2;
-            }
+        if (connectFour.horizontalChecker() == 1){
+
+            return 1;
+
+        } else if (connectFour.horizontalChecker() == 2){
+
+            return 2;
         }
-        for (int col = 0; col < 7; col++) {
-            if (connectFour.verticalChecker(col) == 1){
-                return 1;
-            } else if (connectFour.verticalChecker(col) == 2){
-                return 2;
-            }
+
+        if (connectFour.verticalChecker() == 1){
+
+            return 1;
+        } else if (connectFour.verticalChecker() == 2){
+
+            return 2;
         }
         if (connectFour.reverseDiagonalChecker() == 1){
+
             return 1;
         } else if (connectFour.reverseDiagonalChecker() == 2){
+
             return 2;
         }
         return connectFour.diagonalChecker();
@@ -204,7 +197,6 @@ public class DrawPanel extends JPanel implements MouseListener{
     private void restart(){
         connectFour = new ConnectFour();
         move = 1;
-        placeElse = false;
         repaint();
     }
 

@@ -7,19 +7,15 @@ public class GridTester {
         ConnectFour g = new ConnectFour();
         System.out.println();
 
-            while (true){
+            while (g.checkWin()){
                 int move = s.nextInt();
                 int c = s.nextInt();
                 g.place(c, move);
                 g.printBoard();
-                for (int i = 0; i < g.getBoard().length; i++) {
-                    g.verticalChecker(i);
-                }
-                for (int i = 0; i < g.getBoard()[0].length; i++) {
-                    g.horizontalChecker(i);
-                }
-                    g.reverseDiagonalChecker();
-                    g.diagonalChecker();
+                g.verticalChecker();
+                g.horizontalChecker();
+                g.reverseDiagonalChecker();
+                g.diagonalChecker();
             }
 
     }
