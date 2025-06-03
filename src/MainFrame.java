@@ -10,7 +10,7 @@ public class MainFrame extends JFrame implements Runnable {
         super(display);
         int frameWidth = 460;
         int frameHeight = 400;
-        // add a menu screen to ask user if they want vs ai or vs player
+        // add a menu screen to ask user if they want vs AI or vs player
 //        t = new DrawPanel();
 //        this.add(t);
 //        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

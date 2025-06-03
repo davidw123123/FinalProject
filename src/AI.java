@@ -1,12 +1,10 @@
 import java.util.ArrayList;
 
 public class AI {
-    private static Space[][] copyOfBoard;
-    private int aiSymbol;
-    private int playerSymbol;
+
+    private int aiSymbol = 2;
+    private int playerSymbol = 2;
     public AI(){
-        aiSymbol = 2;
-        playerSymbol = 1;
     }
 
     // Check if the method is maximizing
@@ -20,17 +18,18 @@ public class AI {
     // at the end, if depth is reached, return bestMove else if it's not, return best score.
     public static int miniMax(Space[][] board, int depth, int end,boolean maximizing ){
         // Base statement for when to stop the recursion
-        if (isFull() || depth == 0){
-            return 0;
+        if (isFull(board) || depth == 0){
+
+            return evaluateBoard(board);
         }
         int bestScore = -99999;
         int bestMove = 0;
         if (maximizing){
             for (int i = 0; i < board[0].length; i++) {
-                if (!isValid(i)){
+                if (!isValid(board, i)){
                     continue;
                 }
-                Space[][] copy = copyOfBoard;
+                Space[][] copy = board;
                 applyMove(copy, i, 2);
                 int score = miniMax(copy, depth-1, end, false);
                 if (score > bestScore){
@@ -42,10 +41,10 @@ public class AI {
         }
         if (!maximizing){
             for (int i = 0; i < board[0].length; i++) {
-                if (!isValid(i)){
+                if (!isValid(board, i)){
                     continue;
                 }
-                Space[][] copy = copyOfBoard;
+                Space[][] copy = board;
                 applyMove(copy, i, 1);
                 int score = miniMax(copy, depth-1, end, true);
                 if (score < bestScore){
@@ -55,24 +54,42 @@ public class AI {
         }
 
         if (depth == end){
-            return bestMove;
+            System.out.println(bestMove + "  3");
+            return bestMove ;
         } else {
+            System.out.println(bestScore + "  1");
             return bestScore;
         }
     }
 
+    //evaluates the board and gives a score
+    public static int evaluateBoard(Space[][] board){
+        int score = 0;
+        if (ConnectFour.checkWin(board) == 1){
+            return -9999;
+        } else if (ConnectFour.checkWin(board) == 2){
+            return 9999;
+        }
+        score += evaluateCenter(board, 2, 1);
+        score += evaluateLines(board, 2);
+        score -= evaluateLines(board, 1);
+
+        return score;
+    }
+
+    //
     public static void applyMove(Space[][] board, int col, int player){
-        for (int i = 0; i < board[0].length; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (board[i][col].getNum() == 1){
                 board[i][col] = new Space(2);
                 break;
             }
         }
     }
-    public static boolean isFull(){
+    public static boolean isFull(Space[][] board){
         int count = 0;
-        for (Space[] spaces : copyOfBoard) {
-            for (int j = 0; j < copyOfBoard[0].length; j++) {
+        for (Space[] spaces : board) {
+            for (int j = 0; j < board[0].length; j++) {
                 if (spaces[j].getNum() == 0) {
                     count++;
                 }
@@ -103,7 +120,7 @@ public class AI {
 
     // evaluates the center of the board which is very important to the control of the game. Counts the amount of spaces ai has vs human.
     // negative number means unfavorable for ai while positive means favorable
-    public static int evaluateCenter(Space[][] gameBoard, String aiSymbol, String humanSymbol){
+    public static int evaluateCenter(Space[][] gameBoard, int aiSymbol, int humanSymbol){
         int aiCount = 0;
         int humanCount = 0;
         for (int c = 2; c <= 4 ; c++) {
@@ -118,31 +135,31 @@ public class AI {
         return (int) ((aiCount - humanCount) * 2.5);
     }
 
-    public int[] getValidLocations(){
-        ArrayList<Integer> validLocations = new ArrayList<Integer>();
-        for (int i = 0; i < copyOfBoard[0].length; i++) {
-            if (isValid(i)){
-                validLocations.add(i);
-            }
-        }
-        int[] valid = new int[validLocations.size()];
-        for (int i = 0; i < validLocations.size(); i++) {
-            valid[i] = validLocations.get(i);
-        }
-        return valid;
+//    public int[] getValidLocations(){
+//        ArrayList<Integer> validLocations = new ArrayList<Integer>();
+//        for (int i = 0; i < copyOfBoard[0].length; i++) {
+//            if (isValid(i)){
+//                validLocations.add(i);
+//            }
+//        }
+//        int[] valid = new int[validLocations.size()];
+//        for (int i = 0; i < validLocations.size(); i++) {
+//            valid[i] = validLocations.get(i);
+//        }
+//        return valid;
+//    }
+
+    public static boolean isValid(Space[][] board, int col){
+        return board[board.length - 1][col].getNum() == 0;
     }
 
-    public static boolean isValid(int col){
-        return copyOfBoard[copyOfBoard.length - 1][col].getNum() == 0;
-    }
-
-    public static int evaluateLines(Space[][] board, int num, Player player){
-        //determines the importance of each line
+    public static int evaluateLines(Space[][] board, int num){
+        //determines the score for the overall board
         int score = 0;
 
         //checks for three in a row and if it is, adds score
         for (Space[] value : board) {
-            for (int j = 0; j < board[j].length; j++) {
+            for (int j = 0; j < board[0].length; j++) {
                 try {
                     if ((value[j].getNum() == 1) && (value[j].getNum() == value[j + 1].getNum()) && (value[j].getNum() == value[j + 2].getNum())) {
                         score += 150;

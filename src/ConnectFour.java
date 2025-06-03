@@ -1,22 +1,42 @@
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class ConnectFour {
-    private boolean show;
-    private BufferedImage image;
-    private String imageFileName;
     private Space[][] board;
-    private Player player;
-
+    private Scanner s;
     public ConnectFour() {
         setBoard();
-        this.imageFileName = "restart" + ".png";
-        this.image = readImage();
-        printBoard();
-    }
 
+    }
+    public void startGame(){
+        s = new Scanner(System.in);
+        // turn this into menu/title screen
+        // transfer all this to drawPanel
+        System.out.println("1. Player vs Player"+"\n"+"2. Player vs AI");
+        setBoard();
+        int pick = s.nextInt();
+        if (pick == 1){
+
+            while (checkWin(this.board) == 0){
+                printBoard();
+                int move = s.nextInt();
+                int c = s.nextInt();
+                place(c, move);
+            }
+            if (checkWin(board) == 1){
+                System.out.println("Player 1 Wins");
+            } else
+                System.out.println("Player 2 Wins");
+        } else if (pick == 2){
+            while (checkWin(this.board) == 0){
+                printBoard();
+                int move = s.nextInt();
+                int c = s.nextInt();
+                place(c, move);
+                System.out.println( AI.miniMax(board, 2, 2, true));
+            }
+
+        }
+    }
     public void setBoard() {
         this.board = new Space[6][7];
         for (int i = 0; i < board.length; i++) {
@@ -116,38 +136,63 @@ public class ConnectFour {
         return 0;
     }
 
-    public boolean checkWin() {
-        if (diagonalChecker() > 0 || reverseDiagonalChecker() > 0 || horizontalChecker() > 0 || verticalChecker() > 0){
-            return true;
-        }
-        return false;
-    }
-
-
-    public BufferedImage getImage() {
-        try {
-            BufferedImage image;
-            // if this is true, show the front
-            // otherwise show the back
-                image = ImageIO.read(new File(imageFileName));
-            return image;
-        }
-        catch (IOException e) {
-            System.out.println(e);
-            return null;
-        }
-    }
-
-    public BufferedImage readImage() {
-        try {
-            BufferedImage image = getImage();
-            if (show) {
-                image = ImageIO.read(new File(imageFileName));
+    public static int checkWin(Space[][] board) {
+        //diagonal
+        for (int i = 0; i <= board.length - 4; i++) {
+            for (int j = 3; j < board[0].length; j++) {
+                if (board[i][j].getNum() != 0 && board[i][j].getNum() == board[i + 1][j - 1].getNum() && board[i][j].getNum() == board[i + 2][j - 2].getNum() && board[i][j].getNum() == board[i + 3][j - 3].getNum()) {
+                    if (board[i][j].getNum() == 1) {
+                        return 1;
+                    } else
+                        return 2;
+                }
             }
-            return image;
-        } catch (IOException e) {
-            System.out.println(e);
-            return null;
         }
+
+        //reverse diagonal
+        for (int i = 0; i <= board.length - 4; i++) {
+            for (int j = 0; j <= board[0].length - 4; j++) {
+                if ((board[i][j].getNum() != 0) && (board[i][j].getNum() == board[i + 1][j + 1].getNum()) && (board[i][j].getNum() == board[i + 2][j + 2].getNum()) && (board[i][j].getNum() == board[i + 3][j + 3].getNum())) {
+                    if (board[i][j].getNum() == 1) {
+                        return 1;
+                    } else
+                        return 2;
+                }
+            }
+        }
+
+        //vertical
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                try {
+                    if ( (board[i][j].getNum()!= 0) && (board[i][j].getNum() == board[i+1][j].getNum())  && ( board[i][j].getNum() == board[i+2][j].getNum() )&& ( board[i][j].getNum() == board[i+3][j].getNum() )){
+                        if (board[i][j].getNum() == 1) {
+                            return 1;
+                        } else
+                            return 2;
+                    }
+                } catch (Exception e){
+                    break;
+                }
+            }
+        }
+
+        //horizontal
+        for (Space[] spaces : board) {
+            for (int j = 0; j < board[j].length - 4; j++) {
+                try {
+                    if ((spaces[j].getNum() != 0) && (spaces[j].getNum() == spaces[j + 1].getNum()) && (spaces[j].getNum() == spaces[j + 2].getNum()) && (spaces[j].getNum() == spaces[j + 3].getNum())) {
+                        if (spaces[j].getNum() == 1) {
+                            return 1;
+                        } else
+                            return 2;
+                    }
+                } catch (Exception e) {
+                    break;
+                }
+            }
+        }
+        return 0;
     }
+
 }
