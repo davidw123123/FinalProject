@@ -32,7 +32,9 @@ public class ConnectFour {
                 int move = s.nextInt();
                 int c = s.nextInt();
                 place(c, move);
-                System.out.println( AI.miniMax(board, 2, 2, true));
+                int aimove =  AI.miniMax(board, 2, 2, true);
+                System.out.println(aimove);
+                place(aimove,2 );
             }
 
         }
@@ -143,7 +145,7 @@ public class ConnectFour {
                 if (board[i][j].getNum() != 0 && board[i][j].getNum() == board[i + 1][j - 1].getNum() && board[i][j].getNum() == board[i + 2][j - 2].getNum() && board[i][j].getNum() == board[i + 3][j - 3].getNum()) {
                     if (board[i][j].getNum() == 1) {
                         return 1;
-                    } else
+                    } else if (board[i][j].getNum() == 2)
                         return 2;
                 }
             }

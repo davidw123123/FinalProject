@@ -18,18 +18,19 @@ public class AI {
     // at the end, if depth is reached, return bestMove else if it's not, return best score.
     public static int miniMax(Space[][] board, int depth, int end,boolean maximizing ){
         // Base statement for when to stop the recursion
-        if (isFull(board) || depth == 0){
+        if (depth == 0 || isFull(board)){
 
             return evaluateBoard(board);
         }
-        int bestScore = -99999;
+        int bestScore;
         int bestMove = 0;
         if (maximizing){
+            bestScore = Integer.MIN_VALUE;
             for (int i = 0; i < board[0].length; i++) {
                 if (!isValid(board, i)){
                     continue;
                 }
-                Space[][] copy = board;
+                Space[][] copy = copyBoard(board);
                 applyMove(copy, i, 2);
                 int score = miniMax(copy, depth-1, end, false);
                 if (score > bestScore){
@@ -39,12 +40,13 @@ public class AI {
             }
 
         }
-        if (!maximizing){
+        else {
+            bestScore = Integer.MAX_VALUE;
             for (int i = 0; i < board[0].length; i++) {
                 if (!isValid(board, i)){
                     continue;
                 }
-                Space[][] copy = board;
+                Space[][] copy = copyBoard(board);
                 applyMove(copy, i, 1);
                 int score = miniMax(copy, depth-1, end, true);
                 if (score < bestScore){
@@ -54,10 +56,10 @@ public class AI {
         }
 
         if (depth == end){
-            System.out.println(bestMove + "  3");
-            return bestMove ;
+            System.out.println(bestMove + "  1");
+            return bestMove;
         } else {
-            System.out.println(bestScore + "  1");
+            System.out.println(bestScore + "  2");
             return bestScore;
         }
     }
