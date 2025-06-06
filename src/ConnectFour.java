@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class ConnectFour {
     private Space[][] board;
     private Scanner s;
+
     public ConnectFour() {
         setBoard();
 
