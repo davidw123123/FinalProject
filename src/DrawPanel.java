@@ -17,8 +17,9 @@ public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle playerRect;
     private Rectangle aiRect;
     private int move;
-    private boolean fRect = false;
-    private boolean aRect = false;
+    private boolean vsPlayerMouseOver;
+    private boolean mouseOnScreen;
+    private boolean vsAiMouseOver;
     private Rectangle restartButton;
     private ConnectFour connectFour;
     private boolean clicked = false;
@@ -29,11 +30,39 @@ public class DrawPanel extends JPanel implements MouseListener{
         gameState = 1;
         move = 1;
         this.addMouseListener(this);
+        vsPlayerMouseOver = false;
+        vsAiMouseOver = false;
+
+        playerRect = new Rectangle(100,110,190, 60);
+        column1 = new Rectangle(50, 50, 40, 300);
+        column2 = new Rectangle(100, 50, 40, 300);
+        column3 = new Rectangle(150, 50, 40, 300);
+        column4 = new Rectangle(200, 50, 40, 300);
+        column5 = new Rectangle(250, 50, 40, 300);
+        column6 = new Rectangle(300, 50, 40, 300);
+        column7 = new Rectangle(350, 50, 40, 300);
+        restartButton = new Rectangle(415, 10, 20, 20);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        //checks if mouse position is over vs AI or vs Player
+        // draws > over which one the mouse is over
+        if (mouseOnScreen) {
+            Point mousePosition = this.getMousePosition();
+            if (mousePosition != null) {
+                if (playerRect.contains(mousePosition)) {
+                    vsPlayerMouseOver = true;
+                }
+                else if (aiRect.contains(mousePosition)){
+                    vsAiMouseOver = true;
+                } else
+                    vsPlayerMouseOver = false;
+            }
+        }
+
         setBackground(Color.BLACK);
         Graphics2D g2 = (Graphics2D) g;
 
@@ -47,27 +76,21 @@ public class DrawPanel extends JPanel implements MouseListener{
             g.setFont(new Font("Courier New", Font.PLAIN, 30));
 
             g.drawString("Vs Player", 120, 150);
-             playerRect = new Rectangle(120,120,160, 40);
-            g.drawRect(120,120,160,40);
+             playerRect = new Rectangle(100,110,190, 60);
+            g.drawRect(110,110,190,60);
 
             g.drawString("Vs AI", 120, 230);
              aiRect = new Rectangle(120, 200, 160, 40);
-            g.drawRect(120,200,160,40);
-            if (fRect = true){
-                g.drawString(">", 90, 150);
-            } else if (aRect = true) {
-                g.drawString(">", 90, 150);
+            g.drawRect(110,190,190,60);
+            g.setFont(new Font("Courier New", Font.PLAIN, 50));
+            if (vsPlayerMouseOver){
+                g.drawString(">", 60, 150);
+            } else if (vsAiMouseOver) {
+                g.drawString(">", 60, 230);
             }
-        } else if (gameState == 2) {
-            column1 = new Rectangle(50, 50, 40, 300);
-            column2 = new Rectangle(100, 50, 40, 300);
-            column3 = new Rectangle(150, 50, 40, 300);
-            column4 = new Rectangle(200, 50, 40, 300);
-            column5 = new Rectangle(250, 50, 40, 300);
-            column6 = new Rectangle(300, 50, 40, 300);
-            column7 = new Rectangle(350, 50, 40, 300);
+        }
+        else if (gameState == 2) {
 
-            restartButton = new Rectangle(415, 10, 20, 20);
             g.setColor(Color.GREEN);
 
             g.fillRect(415, 10, 20, 20);
@@ -106,6 +129,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                     g.drawString("Player 2's turn", 80, 30);
                 }
             }
+
             if (checkWin() != 0) {
                 g.setColor(Color.GRAY);
                 g.drawRect(150, 0, 150, 50);
@@ -113,6 +137,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 g.setColor(Color.BLACK);
                 g.setFont(new Font("Courier New", Font.BOLD, 20));
                 g.drawString("Game Over", 170, 25);
+
                 if (checkWin() == 1) {
                     g.setColor(Color.WHITE);
                     g.setFont(new Font("Courier New", Font.BOLD, 17));
@@ -124,50 +149,55 @@ public class DrawPanel extends JPanel implements MouseListener{
                 }
             }
         }
+
     }
 
 
     @Override
     public void mouseClicked(MouseEvent e) {
         Point clickedPoint = e.getPoint();
-        System.out.println(clickedPoint);
-//        if (e.getButton() == MouseEvent.BUTTON1) {
-//            this.clicked = true;
-//
-//            if (column1.contains(clickedPoint)){
-//                if (connectFour.getBoard()[0][0].getNum() == 0) {
-//                    place(0);
-//                }
-//            } else if (column2.contains(clickedPoint)){
-//                if (connectFour.getBoard()[0][1].getNum() == 0) {
-//                    place(1);
-//                }
-//            } else if (column3.contains(clickedPoint)){
-//                if (connectFour.getBoard()[0][2].getNum() == 0) {
-//                    place(2);
-//                }
-//            } else if (column4.contains(clickedPoint)){
-//                if (connectFour.getBoard()[0][3].getNum() == 0) {
-//                    place(3);
-//                }
-//            } else if (column5.contains(clickedPoint)){
-//                if (connectFour.getBoard()[0][4].getNum() == 0) {
-//                    place(4);
-//                }
-//            } else if (column6.contains(clickedPoint)){
-//                if (connectFour.getBoard()[0][5].getNum() == 0) {
-//                    place(5);
-//                }
-//            } else if (column7.contains(clickedPoint)) {
-//                if (connectFour.getBoard()[0][6].getNum() == 0) {
-//                    place(6);
-//                }
-//            }
-//            if (restartButton.contains(clickedPoint)){
-//                restart();
-//            }
-//        }
+        boolean playerRectClicked = playerRect.contains(clickedPoint);
+        if ( (e.getButton() == MouseEvent.BUTTON1) && playerRectClicked ){
+            this.clicked = true;
+                    gameState = 2;
+                    System.out.println(clickedPoint);
+                    System.out.println(column1.contains(clickedPoint));
+                    if (column1.contains(clickedPoint)){
+                        if (connectFour.getBoard()[0][0].getNum() == 0) {
+                            place(0);
+                        }
+                    } else if (column2.contains(clickedPoint)){
+                        if (connectFour.getBoard()[0][1].getNum() == 0) {
+                            place(1);
+                        }
+                    } else if (column3.contains(clickedPoint)){
+                        if (connectFour.getBoard()[0][2].getNum() == 0) {
+                            place(2);
+                        }
+                    } else if (column4.contains(clickedPoint)){
+                        if (connectFour.getBoard()[0][3].getNum() == 0) {
+                            place(3);
+                        }
+                    } else if (column5.contains(clickedPoint)){
+                        if (connectFour.getBoard()[0][4].getNum() == 0) {
+                            place(4);
+                        }
+                    } else if (column6.contains(clickedPoint)){
+                        if (connectFour.getBoard()[0][5].getNum() == 0) {
+                            place(5);
+                        }
+                    } else if (column7.contains(clickedPoint)) {
+                        if (connectFour.getBoard()[0][6].getNum() == 0) {
+                            place(6);
+                        }
+                    }
 
+                    if (restartButton.contains(clickedPoint)){
+                        restart();
+                    }
+
+
+        }
     }
 
 
@@ -183,16 +213,12 @@ public class DrawPanel extends JPanel implements MouseListener{
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if (gameState == 1 && playerRect.contains(e.getLocationOnScreen())){
-            fRect = true;
-        } else if (gameState == 1 && aiRect.contains(e.getLocationOnScreen())){
-            aRect = true;
-        }
+        mouseOnScreen = true;
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        mouseOnScreen = false;
     }
     private void place(int columnIndex) {
         if (move == 1) {
@@ -233,8 +259,21 @@ public class DrawPanel extends JPanel implements MouseListener{
 
     private void restart(){
         connectFour = new ConnectFour();
+        gameState = 1;
         move = 1;
-        repaint();
+        this.addMouseListener(this);
+        vsPlayerMouseOver = false;
+        vsAiMouseOver = false;
+
+        playerRect = new Rectangle(100,110,190, 60);
+        column1 = new Rectangle(50, 50, 40, 300);
+        column2 = new Rectangle(100, 50, 40, 300);
+        column3 = new Rectangle(150, 50, 40, 300);
+        column4 = new Rectangle(200, 50, 40, 300);
+        column5 = new Rectangle(250, 50, 40, 300);
+        column6 = new Rectangle(300, 50, 40, 300);
+        column7 = new Rectangle(350, 50, 40, 300);
+        restartButton = new Rectangle(415, 10, 20, 20);
     }
 
 }
