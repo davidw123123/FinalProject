@@ -159,46 +159,44 @@ public class DrawPanel extends JPanel implements MouseListener{
         if ( (e.getButton() == MouseEvent.BUTTON1) && playerRectClicked ) {
             gameState = 2;
         }
-            this.clicked = true;
 
-                    System.out.println(clickedPoint);
-                    System.out.println(column1.contains(clickedPoint));
-                    if (column1.contains(clickedPoint)){
-                        if (connectFour.getBoard()[0][0].getNum() == 0) {
-                            place(0);
-                        }
-                    } else if (column2.contains(clickedPoint)){
-                        if (connectFour.getBoard()[0][1].getNum() == 0) {
-                            place(1);
-                        }
-                    } else if (column3.contains(clickedPoint)){
-                        if (connectFour.getBoard()[0][2].getNum() == 0) {
-                            place(2);
-                        }
-                    } else if (column4.contains(clickedPoint)){
-                        if (connectFour.getBoard()[0][3].getNum() == 0) {
-                            place(3);
-                        }
-                    } else if (column5.contains(clickedPoint)){
-                        if (connectFour.getBoard()[0][4].getNum() == 0) {
-                            place(4);
-                        }
-                    } else if (column6.contains(clickedPoint)){
-                        if (connectFour.getBoard()[0][5].getNum() == 0) {
-                            place(5);
-                        }
-                    } else if (column7.contains(clickedPoint)) {
-                        if (connectFour.getBoard()[0][6].getNum() == 0) {
-                            place(6);
-                        }
+        if (gameState == 2){
+            clickedPoint = e.getPoint();
+        }
+        this.clicked = true;
+
+        if (column1.contains(clickedPoint)){
+            if (connectFour.getBoard()[0][0].getNum() == 0) {
+                place(0);
+            }
+        } else if (column2.contains(clickedPoint)){
+            if (connectFour.getBoard()[0][1].getNum() == 0) {
+                place(1);
+            }
+        } else if (column3.contains(clickedPoint)){
+            if (connectFour.getBoard()[0][2].getNum() == 0) {
+                place(2);
+            }
+        } else if (column4.contains(clickedPoint)){
+            if (connectFour.getBoard()[0][3].getNum() == 0) {
+                place(3);
+            }
+        } else if (column5.contains(clickedPoint)){
+            if (connectFour.getBoard()[0][4].getNum() == 0) {
+                place(4);
+            }
+        } else if (column6.contains(clickedPoint)){
+            if (connectFour.getBoard()[0][5].getNum() == 0) {
+                place(5);
+            }
+        } else if (column7.contains(clickedPoint)) {
+            if (connectFour.getBoard()[0][6].getNum() == 0) {
+                place(6);
+            }
+        }
+        if (restartButton.contains(clickedPoint)){
+            restart();
                     }
-
-                    if (restartButton.contains(clickedPoint)){
-                        restart();
-                    }
-
-
-
     }
 
 
@@ -261,25 +259,24 @@ public class DrawPanel extends JPanel implements MouseListener{
 
     private void restart(){
 
-        connectFour = new ConnectFour();
-        gameState = 1;
-        move = 1;
+        this.connectFour = new ConnectFour();
+        this.gameState = 1;
+        this.move = 1;
         this.addMouseListener(this);
         this.clicked = false;
-        vsPlayerMouseOver = false;
-        vsAiMouseOver = false;
+        this.vsPlayerMouseOver = false;
+        this.vsAiMouseOver = false;
 
-        playerRect = new Rectangle(100,110,190, 60);
-        column1 = new Rectangle(50, 50, 40, 300);
-        column2 = new Rectangle(100, 50, 40, 300);
-        column3 = new Rectangle(150, 50, 40, 300);
-        column4 = new Rectangle(200, 50, 40, 300);
-        column5 = new Rectangle(250, 50, 40, 300);
-        column6 = new Rectangle(300, 50, 40, 300);
-        column7 = new Rectangle(350, 50, 40, 300);
-        restartButton = new Rectangle(415, 10, 20, 20);
+        this.playerRect = new Rectangle(100,110,190, 60);
+        this.column1 = new Rectangle(50, 50, 40, 300);
+        this.column2 = new Rectangle(100, 50, 40, 300);
+        this.column3 = new Rectangle(150, 50, 40, 300);
+        this.column4 = new Rectangle(200, 50, 40, 300);
+        this.column5 = new Rectangle(250, 50, 40, 300);
+        this.column6 = new Rectangle(300, 50, 40, 300);
+        this.column7 = new Rectangle(350, 50, 40, 300);
+        this.restartButton = new Rectangle(415, 10, 20, 20);
 
-        this.connectFour.printBoard();
     }
 
 }
