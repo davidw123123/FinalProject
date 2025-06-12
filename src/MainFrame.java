@@ -40,4 +40,7 @@ public class MainFrame extends JFrame implements Runnable {
             p.repaint();
         }
     }
+    public void restart(){
+
+    }
 }

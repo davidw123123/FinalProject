@@ -24,7 +24,6 @@ public class DrawPanel extends JPanel implements MouseListener{
     private ConnectFour connectFour;
     private boolean clicked = false;
     public int gameState;
-    public int commandNum = 0;
     public DrawPanel() {
         connectFour = new ConnectFour();
         gameState = 1;
@@ -157,9 +156,11 @@ public class DrawPanel extends JPanel implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         Point clickedPoint = e.getPoint();
         boolean playerRectClicked = playerRect.contains(clickedPoint);
-        if ( (e.getButton() == MouseEvent.BUTTON1) && playerRectClicked ){
+        if ( (e.getButton() == MouseEvent.BUTTON1) && playerRectClicked ) {
+            gameState = 2;
+        }
             this.clicked = true;
-                    gameState = 2;
+
                     System.out.println(clickedPoint);
                     System.out.println(column1.contains(clickedPoint));
                     if (column1.contains(clickedPoint)){
@@ -197,7 +198,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                     }
 
 
-        }
+
     }
 
 
@@ -228,6 +229,7 @@ public class DrawPanel extends JPanel implements MouseListener{
             connectFour.place(columnIndex, 2);
             move = 1;
         }
+        System.out.println("ddd");
         connectFour.printBoard();
     }
     private int checkWin() {
@@ -258,10 +260,12 @@ public class DrawPanel extends JPanel implements MouseListener{
     }
 
     private void restart(){
+
         connectFour = new ConnectFour();
         gameState = 1;
         move = 1;
         this.addMouseListener(this);
+        this.clicked = false;
         vsPlayerMouseOver = false;
         vsAiMouseOver = false;
 
@@ -274,6 +278,8 @@ public class DrawPanel extends JPanel implements MouseListener{
         column6 = new Rectangle(300, 50, 40, 300);
         column7 = new Rectangle(350, 50, 40, 300);
         restartButton = new Rectangle(415, 10, 20, 20);
+
+        this.connectFour.printBoard();
     }
 
 }
