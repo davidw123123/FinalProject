@@ -24,6 +24,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     private ConnectFour connectFour;
     private boolean clicked = false;
     public int gameState;
+    public boolean vsAi;
     public DrawPanel() {
         connectFour = new ConnectFour();
         gameState = 1;
@@ -31,7 +32,7 @@ public class DrawPanel extends JPanel implements MouseListener{
         this.addMouseListener(this);
         vsPlayerMouseOver = false;
         vsAiMouseOver = false;
-
+        vsAi = false;
         playerRect = new Rectangle(100,110,190, 60);
         column1 = new Rectangle(50, 50, 40, 300);
         column2 = new Rectangle(100, 50, 40, 300);
@@ -78,7 +79,7 @@ public class DrawPanel extends JPanel implements MouseListener{
              playerRect = new Rectangle(100,110,190, 60);
             g.drawRect(110,110,190,60);
 
-            g.drawString("Vs AI", 120, 230);
+            g.drawString("Vs AI", 140, 230);
              aiRect = new Rectangle(120, 200, 160, 40);
             g.drawRect(110,190,190,60);
             g.setFont(new Font("Courier New", Font.PLAIN, 50));
@@ -120,12 +121,22 @@ public class DrawPanel extends JPanel implements MouseListener{
 
             g.setFont(new Font("Courier New", Font.BOLD, 30));
             if (checkWin() == 0) {
-                if (move == 1) {
-                    g.setColor(Color.RED);
-                    g.drawString("Player 1's turn", 80, 30);
+                if (vsAi){
+                    if (move == 1){
+                        g.setColor(Color.RED);
+                        g.drawString("Your turn", 120,30);
+                    } else {
+                        g.setColor(Color.YELLOW);
+                        g.drawString("AI's turn",80,30);
+                    }
                 } else {
-                    g.setColor(Color.YELLOW);
-                    g.drawString("Player 2's turn", 80, 30);
+                    if (move == 1) {
+                        g.setColor(Color.RED);
+                        g.drawString("Player 1's turn", 80, 30);
+                    } else {
+                        g.setColor(Color.YELLOW);
+                        g.drawString("Player 2's turn", 80, 30);
+                    }
                 }
             }
 
@@ -140,11 +151,19 @@ public class DrawPanel extends JPanel implements MouseListener{
                 if (checkWin() == 1) {
                     g.setColor(Color.WHITE);
                     g.setFont(new Font("Courier New", Font.BOLD, 17));
-                    g.drawString("Player 1 Wins", 160, 40);
+                    if (vsAi){
+                        g.drawString("You Win",175,40);
+                    } else {
+                        g.drawString("Player 1 Wins", 160, 40);
+                    }
                 } else if (checkWin() == 2) {
                     g.setColor(Color.WHITE);
                     g.setFont(new Font("Courier New", Font.BOLD, 17));
-                    g.drawString("Player 2 Wins", 160, 40);
+                    if (vsAi){
+                        g.drawString("You Win",175,40);
+                    } else {
+                        g.drawString("Player 2 Wins", 160, 40);
+                    }
                 }
             }
         }
@@ -155,48 +174,57 @@ public class DrawPanel extends JPanel implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         Point clickedPoint = e.getPoint();
-        boolean playerRectClicked = playerRect.contains(clickedPoint);
-        if ( (e.getButton() == MouseEvent.BUTTON1) && playerRectClicked ) {
-            gameState = 2;
-        }
 
-        if (gameState == 2){
+
+        if (gameState == 2) {
             clickedPoint = e.getPoint();
         }
-        this.clicked = true;
-
-        if (column1.contains(clickedPoint)){
-            if (connectFour.getBoard()[0][0].getNum() == 0) {
-                place(0);
-            }
-        } else if (column2.contains(clickedPoint)){
-            if (connectFour.getBoard()[0][1].getNum() == 0) {
-                place(1);
-            }
-        } else if (column3.contains(clickedPoint)){
-            if (connectFour.getBoard()[0][2].getNum() == 0) {
-                place(2);
-            }
-        } else if (column4.contains(clickedPoint)){
-            if (connectFour.getBoard()[0][3].getNum() == 0) {
-                place(3);
-            }
-        } else if (column5.contains(clickedPoint)){
-            if (connectFour.getBoard()[0][4].getNum() == 0) {
-                place(4);
-            }
-        } else if (column6.contains(clickedPoint)){
-            if (connectFour.getBoard()[0][5].getNum() == 0) {
-                place(5);
-            }
-        } else if (column7.contains(clickedPoint)) {
-            if (connectFour.getBoard()[0][6].getNum() == 0) {
-                place(6);
+        if (gameState == 1) {
+            if (playerRect.contains(clickedPoint)) {
+                gameState = 2;
+                vsAi = false;
+            } else if (aiRect.contains(clickedPoint)) {
+                gameState = 2;
+                vsAi = true;
             }
         }
-        if (restartButton.contains(clickedPoint)){
-            restart();
-                    }
+        if (gameState == 2) {
+            if (restartButton.contains(clickedPoint)) {
+                restart();
+                return;
+            }
+            this.clicked = true;
+            if (column1.contains(clickedPoint)) {
+                if (connectFour.getBoard()[0][0].getNum() == 0) {
+                    place(0);
+                }
+            } else if (column2.contains(clickedPoint)) {
+                if (connectFour.getBoard()[0][1].getNum() == 0) {
+                    place(1);
+                }
+            } else if (column3.contains(clickedPoint)) {
+                if (connectFour.getBoard()[0][2].getNum() == 0) {
+                    place(2);
+                }
+            } else if (column4.contains(clickedPoint)) {
+                if (connectFour.getBoard()[0][3].getNum() == 0) {
+                    place(3);
+                }
+            } else if (column5.contains(clickedPoint)) {
+                if (connectFour.getBoard()[0][4].getNum() == 0) {
+                    place(4);
+                }
+            } else if (column6.contains(clickedPoint)) {
+                if (connectFour.getBoard()[0][5].getNum() == 0) {
+                    place(5);
+                }
+            } else if (column7.contains(clickedPoint)) {
+                if (connectFour.getBoard()[0][6].getNum() == 0) {
+                    place(6);
+                }
+            }
+
+        }
     }
 
 

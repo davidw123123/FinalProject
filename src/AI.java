@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class AI {
 
     private int aiSymbol = 2;
-    private int playerSymbol = 2;
+    private int playerSymbol = 1;
     public AI(){
     }
 
@@ -18,7 +18,7 @@ public class AI {
     // at the end, if depth is reached, return bestMove else if it's not, return best score.
     public static int miniMax(Space[][] board, int depth, int end,boolean maximizing ){
         // Base statement for when to stop the recursion
-        if (depth == 0 || isFull(board)){
+        if (depth == 0 || isFull(board) || ConnectFour.checkWin(board) != 0){
 
             return evaluateBoard(board);
         }
@@ -51,6 +51,7 @@ public class AI {
                 int score = miniMax(copy, depth-1, end, true);
                 if (score < bestScore){
                     bestScore = score;
+                    bestMove = i;
                 }
             }
         }
@@ -81,9 +82,9 @@ public class AI {
 
     //
     public static void applyMove(Space[][] board, int col, int player){
-        for (int i = 0; i < board.length; i++) {
-            if (board[i][col].getNum() == 1){
-                board[i][col] = new Space(2);
+        for (int i = board.length-1; i >= 0; i--) {
+            if (board[i][col].getNum() == 0){
+                board[i][col] = new Space(player);
                 break;
             }
         }
@@ -112,7 +113,7 @@ public class AI {
     }
 
     public void placeMove(Space[][] gameBoard, int col, Player player){
-        for (int i = 0; i < gameBoard.length; i ++) {
+        for (int i = gameBoard.length-1; i >= 0; i--) {
             if (gameBoard[i][col].getNum() == 0){
                 gameBoard[i][col] = new Space(playerSymbol);
                 break;
