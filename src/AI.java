@@ -110,15 +110,6 @@ public class AI {
         return newBoard;
     }
 
-    public void placeMove(Space[][] gameBoard, int col, Player player){
-        for (int i = gameBoard.length-1; i >= 0; i--) {
-            if (gameBoard[i][col].getNum() == 0){
-                gameBoard[i][col] = new Space(playerSymbol);
-                break;
-            }
-        }
-    }
-
     // evaluates the center of the board which is very important to the control of the game. Counts the amount of spaces ai has vs human.
     // negative number means unfavorable for ai while positive means favorable
     public static int evaluateCenter(Space[][] gameBoard, int aiSymbol, int humanSymbol){
@@ -136,19 +127,6 @@ public class AI {
         return (int) ((aiCount - humanCount) * 2.5);
     }
 
-//    public int[] getValidLocations(){
-//        ArrayList<Integer> validLocations = new ArrayList<Integer>();
-//        for (int i = 0; i < copyOfBoard[0].length; i++) {
-//            if (isValid(i)){
-//                validLocations.add(i);
-//            }
-//        }
-//        int[] valid = new int[validLocations.size()];
-//        for (int i = 0; i < validLocations.size(); i++) {
-//            valid[i] = validLocations.get(i);
-//        }
-//        return valid;
-//    }
 
     public static boolean isValid(Space[][] board, int col){
         return board[0][col].getNum() == 0;
@@ -161,9 +139,7 @@ public class AI {
         //checks for three in a row and if it is, adds score
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length - 2; j++) {
-                if ((board[i][j].getNum() == num) &&
-                        (board[i][j].getNum() == board[i][j + 1].getNum()) &&
-                        (board[i][j].getNum() == board[i][j + 2].getNum())) {
+                if ((board[i][j].getNum() == num) && (board[i][j].getNum() == board[i][j + 1].getNum()) && (board[i][j].getNum() == board[i][j + 2].getNum())) {
                     score += 150;
                 }
             }
@@ -181,9 +157,7 @@ public class AI {
         //vertical 3 in a row checker
         for (int i = 0; i < board.length - 2; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if ((board[i][j].getNum() == num) &&
-                        (board[i][j].getNum() == board[i+1][j].getNum()) &&
-                        (board[i][j].getNum() == board[i+2][j].getNum())) {
+                if ((board[i][j].getNum() == num) && (board[i][j].getNum() == board[i+1][j].getNum()) && (board[i][j].getNum() == board[i+2][j].getNum())) {
                     score += 150;
                 }
             }
@@ -201,9 +175,7 @@ public class AI {
         //diagonal three in a row
         for (int i = 0; i < board.length - 2; i++) {
             for (int j = 0; j < board[0].length - 2; j++) {
-                if ((board[i][j].getNum() == num) &&
-                        (board[i+1][j+1].getNum() == num) &&
-                        (board[i+2][j+2].getNum() == num)){
+                if ((board[i][j].getNum() == num) && (board[i+1][j+1].getNum() == num) && (board[i+2][j+2].getNum() == num)){
                     score += 150;
                 }
             }
@@ -212,9 +184,7 @@ public class AI {
         //reverse diagonal three in a row
         for (int i = 0; i < board.length - 2; i++) {
             for (int j = 2; j < board[0].length; j++) {
-                if ((board[i][j].getNum() == num) &&
-                        (board[i+1][j-1].getNum() == num) &&
-                        (board[i+2][j-2].getNum() == num)){
+                if ((board[i][j].getNum() == num) && (board[i+1][j-1].getNum() == num) && (board[i+2][j-2].getNum() == num)){
                     score += 150;
                 }
             }
@@ -223,9 +193,7 @@ public class AI {
         //diagonal two in a row
         for (int i = 0; i < board.length - 2; i++) {
             for (int j = 2; j < board[0].length; j++) {
-                if ((board[i][j].getNum() == num) &&
-                        (board[i+1][j-1].getNum() == num) &&
-                        (board[i+2][j-2].getNum() == num)){
+                if ((board[i][j].getNum() == num) && (board[i+1][j-1].getNum() == num) && (board[i+2][j-2].getNum() == num)){
                     score += 150;
                 }
             }

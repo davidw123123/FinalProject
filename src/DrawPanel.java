@@ -26,6 +26,7 @@ DrawPanel extends JPanel implements MouseListener{
     private boolean clicked = false;
     public int gameState;
     public boolean vsAi;
+
     public DrawPanel() {
         connectFour = new ConnectFour();
         gameState = 1;
