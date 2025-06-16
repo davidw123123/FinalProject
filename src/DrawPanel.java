@@ -5,7 +5,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
-public class DrawPanel extends JPanel implements MouseListener{
+public class
+DrawPanel extends JPanel implements MouseListener{
 
     private Rectangle column1;
     private Rectangle column2;
@@ -255,8 +256,18 @@ public class DrawPanel extends JPanel implements MouseListener{
             connectFour.place(columnIndex, 2);
             move = 1;
         }
-        System.out.println("ddd");
         connectFour.printBoard();
+
+        if (vsAi && move == 2 && checkWin() == 0){
+            makeAIMove();
+        }
+        repaint();
+    }
+    public void makeAIMove(){
+        int aiMove = AI.miniMax(connectFour.getBoard(),5 ,5, true);
+        connectFour.place(aiMove, 2);
+        move = 1;
+        repaint();
     }
     private int checkWin() {
         if (connectFour.horizontalChecker() == 1){
@@ -294,7 +305,7 @@ public class DrawPanel extends JPanel implements MouseListener{
         this.clicked = false;
         this.vsPlayerMouseOver = false;
         this.vsAiMouseOver = false;
-
+        this.vsAi = false;
         this.playerRect = new Rectangle(100,110,190, 60);
         this.column1 = new Rectangle(50, 50, 40, 300);
         this.column2 = new Rectangle(100, 50, 40, 300);
@@ -305,6 +316,7 @@ public class DrawPanel extends JPanel implements MouseListener{
         this.column7 = new Rectangle(350, 50, 40, 300);
         this.restartButton = new Rectangle(415, 10, 20, 20);
 
+        repaint();
     }
 
 }
