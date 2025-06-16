@@ -272,7 +272,7 @@ DrawPanel extends JPanel implements MouseListener{
         repaint();
     }
     public void makeAIMove(){
-        int aiMove = AI.miniMax(connectFour.getBoard(),5 ,5, true);
+        int aiMove = AI.miniMax(connectFour.getBoard(),4 ,4, true);
         if (aiMove >= 0 && aiMove < 7) {
             connectFour.place(aiMove, 2);
             move = 1;
@@ -311,7 +311,6 @@ DrawPanel extends JPanel implements MouseListener{
         this.connectFour = new ConnectFour();
         this.gameState = 1;
         this.move = 1;
-        this.addMouseListener(this);
         this.clicked = false;
         this.vsPlayerMouseOver = false;
         this.vsAiMouseOver = false;
