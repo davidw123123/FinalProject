@@ -35,6 +35,7 @@ DrawPanel extends JPanel implements MouseListener{
         vsAiMouseOver = false;
         vsAi = false;
         playerRect = new Rectangle(100,110,190, 60);
+        aiRect = new Rectangle(100, 190, 190, 60);
         column1 = new Rectangle(50, 50, 40, 300);
         column2 = new Rectangle(100, 50, 40, 300);
         column3 = new Rectangle(150, 50, 40, 300);
@@ -81,7 +82,6 @@ DrawPanel extends JPanel implements MouseListener{
             g.drawRect(110,110,190,60);
 
             g.drawString("Vs AI", 140, 230);
-             aiRect = new Rectangle(120, 200, 160, 40);
             g.drawRect(110,190,190,60);
             g.setFont(new Font("Courier New", Font.PLAIN, 50));
             if (vsPlayerMouseOver){
@@ -161,7 +161,7 @@ DrawPanel extends JPanel implements MouseListener{
                     g.setColor(Color.WHITE);
                     g.setFont(new Font("Courier New", Font.BOLD, 17));
                     if (vsAi){
-                        g.drawString("You Win",175,40);
+                        g.drawString("AI Win",175,40);
                     } else {
                         g.drawString("Player 2 Wins", 160, 40);
                     }
@@ -188,12 +188,20 @@ DrawPanel extends JPanel implements MouseListener{
                 gameState = 2;
                 vsAi = true;
             }
-        }
-        if (gameState == 2) {
+        } else if (gameState == 2) {
             if (restartButton.contains(clickedPoint)) {
                 restart();
                 return;
             }
+
+            if (vsAi && move == 2) {
+                return;
+            }
+
+            if (checkWin() != 0) {
+                return;
+            }
+
             this.clicked = true;
             if (column1.contains(clickedPoint)) {
                 if (connectFour.getBoard()[0][0].getNum() == 0) {
@@ -265,8 +273,10 @@ DrawPanel extends JPanel implements MouseListener{
     }
     public void makeAIMove(){
         int aiMove = AI.miniMax(connectFour.getBoard(),5 ,5, true);
-        connectFour.place(aiMove, 2);
-        move = 1;
+        if (aiMove >= 0 && aiMove < 7) {
+            connectFour.place(aiMove, 2);
+            move = 1;
+        }
         repaint();
     }
     private int checkWin() {
@@ -307,6 +317,7 @@ DrawPanel extends JPanel implements MouseListener{
         this.vsAiMouseOver = false;
         this.vsAi = false;
         this.playerRect = new Rectangle(100,110,190, 60);
+        this.aiRect = new Rectangle(100, 190, 190, 60);
         this.column1 = new Rectangle(50, 50, 40, 300);
         this.column2 = new Rectangle(100, 50, 40, 300);
         this.column3 = new Rectangle(150, 50, 40, 300);

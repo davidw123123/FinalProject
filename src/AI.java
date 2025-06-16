@@ -23,7 +23,7 @@ public class AI {
             return evaluateBoard(board);
         }
         int bestScore;
-        int bestMove = 0;
+        int bestMove = -1;
         if (maximizing){
             bestScore = Integer.MIN_VALUE;
             for (int i = 0; i < board[0].length; i++) {
@@ -57,10 +57,8 @@ public class AI {
         }
 
         if (depth == end){
-            System.out.println(bestMove + "  1");
             return bestMove;
         } else {
-            System.out.println(bestScore + "  2");
             return bestScore;
         }
     }
@@ -161,122 +159,82 @@ public class AI {
         int score = 0;
 
         //checks for three in a row and if it is, adds score
-        for (Space[] value : board) {
-            for (int j = 0; j < board[0].length; j++) {
-                try {
-                    if ((value[j].getNum() == num) && (value[j].getNum() == value[j + 1].getNum()) && (value[j].getNum() == value[j + 2].getNum())) {
-                        score += 150;
-                    } else
-                        score += 100;
-                } catch (Exception e) {
-                    break;
-                }
-            }
-        }
-        for (Space[] spaces : board) {
-            for (int j = board[0].length - 1; j > 3; j--) {
-                try {
-                    if ((spaces[j].getNum() == num) && (spaces[j].getNum() == spaces[j - 1].getNum()) && (spaces[j].getNum() == spaces[j - 2].getNum())) {
-                        score += 150;
-                    } else
-                        score += 100;
-                } catch (Exception e) {
-                    break;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length - 2; j++) {
+                if ((board[i][j].getNum() == num) &&
+                        (board[i][j].getNum() == board[i][j + 1].getNum()) &&
+                        (board[i][j].getNum() == board[i][j + 2].getNum())) {
+                    score += 150;
                 }
             }
         }
 
         // horizontal two in a row
-        for (int i = board.length - 1; i >= 0; i--) {
-            for (int j = 0; j < 2; j++) {
-                if ((board[i][j].getNum()== num) && (board[i][j + 1].getNum()== num)){
-                    score += 5;
-                }
-            }
-        }
-
-        for (int i = board.length - 1; i >= 0; i--) {
-            for (int j = board[0].length-1; j > 4; j--) {
-                if ((board[i][j].getNum()== num) && (board[i][j + 1].getNum()== num)){
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length - 1; j++) {
+                if ((board[i][j].getNum() == num) && (board[i][j + 1].getNum() == num)){
                     score += 5;
                 }
             }
         }
 
         //vertical 3 in a row checker
-        for (int i = 0; i < board[0].length-1; i++) {
-            for (int j = board[0].length - 1; j > 3 ; j--) {
-                try {
-                    if ( (board[i][j].getNum()== num) && (board[i][j].getNum() == board[i+1][j].getNum())  && ( board[i][j].getNum() == board[i+2][j].getNum() )){
-                        score += 150;
-                    } else
-                        score += 100;
-                } catch (Exception e){
-                    break;
-                }
-            }
-        }
-
-        for (int i = board[0].length - 1; i > 0; i--) {
-            for (int j = board[0].length-1; j > 2; j--) {
-                try {
-                    if ( (board[i][j].getNum()== num) && (board[i][j].getNum() == board[i-1][j].getNum())  && ( board[i][j].getNum() == board[i-2][j].getNum() )){
-                        score += 150;
-                    } else
-                        score += 100;
-                } catch (Exception e){
-                    break;
-                }
-            }
-        }
-
-        //vertical 2 in a row
-        for (int i = 0; i < board[0].length - 1; i++) {
-            for (int j = board.length - 1; j > 4; j--) {
-                if ((board[j][i].getNum()== num) && (board[j - 1][i].getNum()== num)) {
-                    score += 5;
-                }
-
-            }
-        }
-        for (int i = board[0].length - 1; i > 0; i--) {
-            for (int j = board.length - 1; j > 3; j--) {
-                if ((board[j][i].getNum()== num) && board[j - 1][i].getNum()== num) {
-                    score += 5;
-                }
-            }
-        }
-
-        //diagonal checker for 3 in a row
-        for (int i = 2; i < board.length; i++) {
-            for (int j = 0; j < board[0].length-2; j++) {
-                if ((board[j][i].getNum()== num) && board[i-1][j+1].getNum() == num && (board[i-2][j+2].getNum() == num)){
+        for (int i = 0; i < board.length - 2; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if ((board[i][j].getNum() == num) &&
+                        (board[i][j].getNum() == board[i+1][j].getNum()) &&
+                        (board[i][j].getNum() == board[i+2][j].getNum())) {
                     score += 150;
                 }
             }
         }
 
-        for (int i = 0; i < board.length-2; i++) {
-            for (int j = 0; j < board[0].length-2; j++) {
-                if ((board[j][i].getNum()== num) && board[i+1][j+1].getNum() == num && (board[i+2][j+2].getNum() == num)){
+        //vertical two in a row
+        for (int i = 0; i < board.length - 1; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if ((board[i][j].getNum() == num) && (board[i+1][j].getNum() == num)) {
                     score += 5;
                 }
             }
         }
 
-        // diagonal two in a row
-        for (int i = 2; i < board.length; i++) {
-            for (int j = 0; j < board[0].length-2; j++) {
-                if ((board[j][i].getNum()== num) && board[i-1][j+1].getNum() == num){
-                    score += 5;
-                }
-            }
-        }
-
-        for (int i = 0; i < board.length-2; i++) {
-            for (int j = 0; j < board[0].length-2; j++) {
-                if ((board[j][i].getNum()== num) && board[i+1][j+1].getNum() == num){
+        //diagonal three in a row
+        for (int i = 0; i < board.length - 2; i++) {
+            for (int j = 0; j < board[0].length - 2; j++) {
+                if ((board[i][j].getNum() == num) &&
+                        (board[i+1][j+1].getNum() == num) &&
+                        (board[i+2][j+2].getNum() == num)){
                     score += 150;
+                }
+            }
+        }
+
+        //reverse diagonal three in a row
+        for (int i = 0; i < board.length - 2; i++) {
+            for (int j = 2; j < board[0].length; j++) {
+                if ((board[i][j].getNum() == num) &&
+                        (board[i+1][j-1].getNum() == num) &&
+                        (board[i+2][j-2].getNum() == num)){
+                    score += 150;
+                }
+            }
+        }
+
+        //diagonal two in a row
+        for (int i = 0; i < board.length - 2; i++) {
+            for (int j = 2; j < board[0].length; j++) {
+                if ((board[i][j].getNum() == num) &&
+                        (board[i+1][j-1].getNum() == num) &&
+                        (board[i+2][j-2].getNum() == num)){
+                    score += 150;
+                }
+            }
+        }
+        //reverse diagonal two in a row
+        for (int i = 0; i < board.length - 1; i++) {
+            for (int j = 1; j < board[0].length; j++) {
+                if ((board[i][j].getNum() == num) && (board[i+1][j-1].getNum() == num)){
+                    score += 5;
                 }
             }
         }
